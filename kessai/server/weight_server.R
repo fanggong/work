@@ -53,10 +53,10 @@ output$wt_plot <- renderPlot({
     family = "STKaiti"
   )
   plot(
-    as.Date(wt_dat()$date), round(wt_dat()$weight, 2), type = "p",
+    as.Date(wt_dat()$date), round(wt_dat()$weight, 2), type = "b",
     pch = 16, col = "royalblue2", cex = 1, cex.axis = 1,
     cex.lab = 1, xaxs = "r",
-    xlab = "日 期", ylab = "体 重",
+    xlab = "DATE", ylab = "WEIGHT",
     xlim = range(as.Date(wt_dat()$date)), xaxt = "n",
     ylim = range(wt_dat()$weight), yaxt = "n"
   )
