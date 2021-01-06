@@ -54,27 +54,26 @@ output$wt_plot <- renderPlot({
   )
   plot(
     as.Date(wt_dat()$date), round(wt_dat()$weight, 2), type = "b",
-    pch = 16, col = "royalblue2", cex = 1, cex.axis = 1,
-    cex.lab = 1, xaxs = "r",
+    pch = 16, col = "royalblue2", xaxs = "r",
     xlab = "DATE", ylab = "WEIGHT",
     xlim = range(as.Date(wt_dat()$date)), xaxt = "n",
-    ylim = range(wt_dat()$weight), yaxt = "n"
+    ylim = c(floor(min(wt_dat()$weight)), ceiling(max(wt_dat()$weight))), yaxt = "n"
   )
   axis.Date(
     1, at = seq(min(as.Date(wt_dat()$date)), max(as.Date(wt_dat()$date)), 7), 
-    cex.axis = 0.7, format = "%m-%d", tck = -0.01
+    format = "%m-%d", tck = -0.01, label = FALSE
   )
   axis.Date(
     1, at = seq(min(as.Date(wt_dat()$date)), max(as.Date(wt_dat()$date)), 1), 
-    cex.axis = 0.7, format = "%m-%d", tck = -0.005, labels = FALSE
-  )
-  axis(
-    2, at = seq(floor(min(wt_dat()$weight)), ceiling(max(wt_dat()$weight)), 5),
-    cex.axis = 0.7, tck = -0.01
+    format = "%m-%d", tck = -0.005
   )
   axis(
     2, at = seq(floor(min(wt_dat()$weight)), ceiling(max(wt_dat()$weight)), 1),
-    cex.axis = 0.7, tck = -0.006, label = FALSE
+    tck = -0.01, labels = FALSE
+  )
+  axis(
+    2, at = seq(floor(min(wt_dat()$weight)), ceiling(max(wt_dat()$weight)), 0.5),
+    tck = -0.005
   )
   par(default)
 })
