@@ -39,8 +39,8 @@ observeEvent(input$wt_submit, {
 wt_dat <- reactive({
   dbGetQuery(
     pool, sprintf(
-      "select date, weight from weight where date > '%s' and date < '%s'",
-      input$wt_plot_range[1], input$wt_plot_range[2]
+      "select date, weight from weight where date >= '%s' and date < '%s' order by date",
+      input$wt_plot_range[1], input$wt_plot_range[2] + 1
     )
   )
 })
@@ -52,19 +52,20 @@ output$wt_plot <- renderPlot({
     mgp = c(1.3, 0.3, 0),
     family = "STKaiti"
   )
+  date <- as.Date(wt_dat()$date, tz = "Asia/Taipei")
   plot(
-    as.Date(wt_dat()$date), round(wt_dat()$weight, 2), type = "b",
+    date, round(wt_dat()$weight, 2), type = "b",
     pch = 16, col = "royalblue2", xaxs = "r",
     xlab = "DATE", ylab = "WEIGHT",
-    xlim = range(as.Date(wt_dat()$date)), xaxt = "n",
+    xlim = range(date), xaxt = "n",
     ylim = c(floor(min(wt_dat()$weight)), ceiling(max(wt_dat()$weight))), yaxt = "n"
   )
   axis.Date(
-    1, at = seq(min(as.Date(wt_dat()$date)), max(as.Date(wt_dat()$date)), 7), 
+    1, at = seq(min(date), max(date), 7), 
     format = "%m-%d", tck = -0.01, label = FALSE
   )
   axis.Date(
-    1, at = seq(min(as.Date(wt_dat()$date)), max(as.Date(wt_dat()$date)), 1), 
+    1, at = seq(min(date), max(date), 1), 
     format = "%m-%d", tck = -0.005
   )
   axis(
