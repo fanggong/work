@@ -1,4 +1,3 @@
-
 mkr_dat <- dbGetQuery(pool, "select category, brand, size, price, date from make_up")
 
 mkr_check <- eventReactive(input$mkr_submit, {
@@ -18,23 +17,18 @@ observeEvent(input$mkr_submit, {
   ))
   output$mkr_hint <- renderText({
     if (is.null(mkr_check())) {
+      mkr_new_record <- data.frame(
+        category = input$mkr_category,
+        brand = input$mkr_brand,
+        size = input$mkr_size,
+        price = input$mkr_price,
+        date = input$mkr_date
+      )
+      dbWriteTable(pool, "make_up", mkr_new_record, append = TRUE, row.names = FALSE)
+      mkr_dat <<- dbGetQuery(pool, "select category, brand, size, price, date from make_up")
       "提交成功"
     }
   })
-})
-
-observeEvent(input$mkr_submit, {
-  if (is.null(mkr_check())) {
-    mkr_new_record <- data.frame(
-      category = input$mkr_category,
-      brand = input$mkr_brand,
-      size = input$mkr_size,
-      price = input$mkr_price,
-      date = input$mkr_date
-    )
-    dbWriteTable(pool, "make_up", mkr_new_record, append = TRUE, row.names = FALSE)
-    mkr_dat <<- dbGetQuery(pool, "select category, brand, size, price, date from make_up")
-  }
 })
 
 observeEvent(input$mkr_history, {
