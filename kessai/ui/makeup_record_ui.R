@@ -6,28 +6,21 @@ CONSMETICS <- list(
 tabItem(
   tabName = "makeup_record",
   column(
-    width = 3,
+    width = 12,
     boxPlus(
-      title = "记录提交",
+      title = NULL,
       width = NULL, solidHeader = TRUE, closable = FALSE, collapsible = TRUE,
-      selectInput("mkr_category", "类别", choices = CONSMETICS),
-      textInput("mkr_brand", "品牌"),
-      numericInput("mkr_size", "规格", value = NA, min = 0),
-      numericInput("mkr_price", "价格", value = NA, min = 0),
-      dateInput("mkr_date", "日期", value = Sys.Date()),
-      br(),
-      actionButton("mkr_submit", "提交", width = "100%"),
-      hr(),
-      textOutput("mkr_hint")
-    )
-  ),
-  column(
-    width = 9, 
-    boxPlus(
-      title = "记录查看",
-      width = NULL, solidHeader = TRUE, closable = FALSE, collapsible = TRUE,
-      DT::dataTableOutput("mkr_history"),
-      hr()
+      fluidRow(
+        column(4, selectInput("mkr_category", "类别", choices = CONSMETICS)),
+        column(4, numericInput("mkr_size", "规格", value = NA, min = 0)),
+        column(4, dateInput("mkr_date", "日期", value = Sys.Date(), max = Sys.Date()))
+      ),
+      fluidRow(
+        column(4, textInput("mkr_brand", "品牌")),
+        column(4, numericInput("mkr_price", "价格", value = NA, min = 0)),
+        column(2, br(), actionButton("mkr_submit", "提交", width = "100%")),
+        column(2, br(), actionButton("mkr_history", "查看记录", width = "100%"))
+      )
     )
   )
 )

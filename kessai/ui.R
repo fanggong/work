@@ -1,6 +1,3 @@
-library(shiny)
-library(shinydashboard)
-library(shinydashboardPlus)
 
 # header -----------------------------
 header <- dashboardHeaderPlus(
@@ -12,6 +9,7 @@ header <- dashboardHeaderPlus(
 # sidebar ----------------------------
 sidebar <- dashboardSidebar(
   sidebarMenu(
+    id = "sidebar",
     menuItem("GONG：体重记录", tabName = "weight"),
     menuItem("GONG：化妆品记录", tabName = "makeup_record"),
     menuItem("BOTH：卡片记录", tabName = "card")
@@ -37,6 +35,7 @@ rightsidebar <- rightSidebar(
 
 # ui -------------------------------
 ui <- dashboardPagePlus(
+  useShinyjs(),
   header = header,
   sidebar = sidebar,
   body = body,

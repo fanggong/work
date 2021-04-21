@@ -1,16 +1,5 @@
-output$mkr_history <- DT::renderDataTable({
-  do.call(format_makeup, list(dt = dbReadTable(pool, "make_up")))
-})
 
-makeup_record_new <- reactive({
-  data.frame(
-    category = input$mkr_category,
-    brand = input$mkr_brand,
-    size = input$mkr_size,
-    price = input$mkr_price,
-    date = input$mkr_date
-  )
-})
+mkr_dat <- dbGetQuery(pool, "select category, brand, size, price, date from make_up")
 
 mkr_check <- eventReactive(input$mkr_submit, {
   validate(
@@ -22,21 +11,43 @@ mkr_check <- eventReactive(input$mkr_submit, {
 })
 
 observeEvent(input$mkr_submit, {
+  showModal(modalDialog(
+    textOutput("mkr_hint"),
+    title = icon("exclamation-triangle"), easyClose = TRUE, size = "s", 
+    footer = modalButton("关闭")
+  ))
   output$mkr_hint <- renderText({
     if (is.null(mkr_check())) {
-      NULL
+      "提交成功"
     }
   })
 })
 
 observeEvent(input$mkr_submit, {
   if (is.null(mkr_check())) {
-    dbWriteTable(pool, "make_up", makeup_record_new(), append = TRUE, row.names = FALSE)
-    output$mkr_history <- DT::renderDataTable({
-      do.call(format_makeup, list(dt = dbReadTable(pool, "make_up")))
-    })
-    output$mkr_hint <- renderText({
-      "提交成功"
-    })
+    mkr_new_record <- data.frame(
+      category = input$mkr_category,
+      brand = input$mkr_brand,
+      size = input$mkr_size,
+      price = input$mkr_price,
+      date = input$mkr_date
+    )
+    dbWriteTable(pool, "make_up", mkr_new_record, append = TRUE, row.names = FALSE)
+    mkr_dat <<- dbGetQuery(pool, "select category, brand, size, price, date from make_up")
   }
 })
+
+observeEvent(input$mkr_history, {
+  showModal(modalDialog(
+    DT::dataTableOutput("mkr_record"),
+    title = "历史记录", easyClose = TRUE, size = "l", footer = modalButton("关闭")
+  ))
+  output$mkr_record <- DT::renderDataTable({
+    DT::datatable(
+      mkr_dat, class = "cell-border stripe",
+      colnames = c("类别" = "category", "品牌" = "brand", "规格" = "size",
+                   "价格" = "price", "开始使用日期" = "date")
+    )
+  })
+})
+

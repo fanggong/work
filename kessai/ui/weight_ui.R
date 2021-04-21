@@ -1,28 +1,20 @@
 tabItem(
   tabName = "weight",
   column(
-    width = 3,
+    width = 12,
     boxPlus(
-      title = "记录提交",
-      width = NULL, solidHeader = TRUE, closable = FALSE, collapsible = TRUE,
-      numericInput("wt_weight", "体重(kg)", value = NA, step = 0.01),
-      actionButton("wt_submit", "提交", width = "100%"),
-      hr(),
-      textOutput("wt_hint")
-    ),
-    boxPlus(
-      title = "记录查看",
-      width = NULL, solidHeader = TRUE, closable = FALSE, collapsible = TRUE,
-      tableOutput("wt_history")
-    )
-  ),
-  column(
-    width = 9,
-    boxPlus(
-      title = "燃尽图",
-      width = NULL, solidHeader = TRUE, closable = FALSE, collapsible = TRUE,
-      uiOutput("wt_plot_range"),
-      plotOutput("wt_plot")
+      title = NULL,
+      width = NULL, solidHeader = FALSE, closable = FALSE, collapsible = TRUE,
+      fluidRow(
+        column(width = 3, dateInput("wt_date", "日期", value = Sys.Date(), max = Sys.Date(), width = "90%")),
+        column(width = 3, numericInput("wt_weight", "体重", value = NA, step = 0.01, width = "90%")),
+        column(width = 3, br(), actionButton("wt_submit", "提交记录", width = "90%")),
+        column(width = 3, br(), actionButton("wt_history", "查看记录", width = "90%"))
+      ),
+      fluidRow(
+        hr(),
+        column(width = 12, dygraphOutput("wt_plot", height = "530px"))
+      )
     )
   )
 )
