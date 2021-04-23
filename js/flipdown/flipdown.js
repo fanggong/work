@@ -118,7 +118,7 @@ var FlipDown = function () {
         this.daysremaining = Math.floor((this.epoch - this.now) / 86400).toString().length;
       }
 
-      var dayRotorCount = this.daysremaining <= 2 ? 2 : this.daysremaining;
+      var dayRotorCount = this.daysremaining <= 3 ? 3 : this.daysremaining;
 
       for (var i = 0; i < dayRotorCount + 6; i++) {
         this.rotors.push(this._createRotor(0));
@@ -213,7 +213,7 @@ var FlipDown = function () {
       var _this = this;
 
       var init = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-      this.clockStrings.d = pad(this.clockValues.d, 2);
+      this.clockStrings.d = pad(this.clockValues.d, 3);
       this.clockStrings.h = pad(this.clockValues.h, 2);
       this.clockStrings.m = pad(this.clockValues.m, 2);
       this.clockStrings.s = pad(this.clockValues.s, 2);
