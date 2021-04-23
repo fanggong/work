@@ -1,6 +1,6 @@
 {
   "postgres":{
-    "host":"123.4.56.78",
+    "host":"123.45.56.78",
     "user":"username",
     "password":"password",
     "dbname":"kessai"
