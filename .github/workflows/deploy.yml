@@ -29,4 +29,5 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.DEPLOY_KEY }}
           script: |
+            cp /root/config.json /srv/shiny-server/tool4gong/kessai
             systemctl restart shiny-server.service
