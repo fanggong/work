@@ -1,9 +1,7 @@
 
 # header -----------------------------
-header <- dashboardHeaderPlus(
-  title = "FANG & GONG",
-  enable_rightsidebar = TRUE,
-  rightSidebarIcon = "gears"
+header <- dashboardHeader(
+  title = "FANG & GONG"
 )
 
 # sidebar ----------------------------
@@ -25,19 +23,11 @@ body <- dashboardBody(
   )
 )
 
-# rightsidebar ---------------------
-rightsidebar <- rightSidebar(
-  background = "dark",
-  rightSidebarTabContent(id = 1, title = "tab 1"),
-  rightSidebarTabContent(id = 2, title = "tab 2")
-)
-
 
 # ui -------------------------------
-ui <- dashboardPagePlus(
+ui <- dashboardPage(
   useShinyjs(),
   header = header,
   sidebar = sidebar,
-  body = body,
-  rightsidebar = rightsidebar
+  body = body
 )

@@ -2,7 +2,7 @@ tabItem(
   tabName = "weight",
   column(
     width = 12,
-    boxPlus(
+    box(
       title = NULL,
       width = NULL, solidHeader = FALSE, closable = FALSE, collapsible = TRUE,
       fluidRow(

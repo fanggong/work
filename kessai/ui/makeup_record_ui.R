@@ -7,7 +7,7 @@ tabItem(
   tabName = "makeup_record",
   column(
     width = 12,
-    boxPlus(
+    box(
       title = NULL,
       width = NULL, solidHeader = TRUE, closable = FALSE, collapsible = TRUE,
       fluidRow(
