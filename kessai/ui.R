@@ -20,13 +20,13 @@ body <- dashboardBody(
     source("ui/makeup_record_ui.R", local = TRUE, encoding = "UTF-8")$value,
     source("ui/weight_ui.R", local = TRUE, encoding = "UTF-8")$value,
     source("ui/card_ui.R", local = TRUE, encoding = "UTF-8")$value
-  )
+  ),
+  useShinyjs()
 )
 
 
 # ui -------------------------------
 ui <- dashboardPage(
-  useShinyjs(),
   header = header,
   sidebar = sidebar,
   body = body

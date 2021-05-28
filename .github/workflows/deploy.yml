@@ -30,4 +30,7 @@ jobs:
           key: ${{ secrets.DEPLOY_KEY }}
           script: |
             cp /root/config.json /srv/shiny-server/tool4gong/kessai
+            cd /srv/shiny-server/tool4gong/kessai
+            R -e "renv::restore()"
+            R -e "renv::isolate()"
             systemctl restart shiny-server.service
